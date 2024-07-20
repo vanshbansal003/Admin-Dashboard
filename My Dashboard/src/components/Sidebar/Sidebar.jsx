@@ -17,22 +17,35 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./Sidebar.scss";
-import { sidebarContext } from "../../Context/SidebarContext";
+import { SidebarContext } from "../../Context/SidebarContext";
 
 
 const Sidebar = () => {
 
   const { theme } = useContext(ThemeContext);
-  const {isSidebarOpen , closeSidebar} = useContext(sidebarContext);
+  const {isSidebarOpen , closeSidebar} = useContext(SidebarContext);
   const navbarRef = useRef(null);
 
+  // Closing the navbar when clicked outside the sidebar area
   const handleClickOutside = (event) => {
-    
-  }
+    console.log('Click detected outside', event.target);
 
+    if(navbarRef.current && 
+    !navbarRef.current.contains(event.target) && event.target.className !== "sidebar-open-btn"){
+      closeSidebar();
+    }
+  }
+// use Effect for Sidebar
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown" , handleClickOutside);
+    };
+  },[])
 
   return (
-    <nav className={'sidebar'}>
+    <nav className={`sidebar ${isSidebarOpen ? "sidebar-show":""}`} ref = {navbarRef} >
+      
       {/* Sidebar Top */}
       <div className='sidebar-top'>
         <div className='sidebar-brand'>
@@ -40,7 +53,7 @@ const Sidebar = () => {
          <span className="sidebar-brand-text">Dashboard</span>
         </div>
         <button className="sidebar-close-btn">
-          <MdOutlineClose size={24}/>
+          <MdOutlineClose size={24} onClick={closeSidebar}/>
         </button>
       </div>
 

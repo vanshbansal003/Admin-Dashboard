@@ -1,9 +1,10 @@
+import AreaTop from "../../components/Dashboard/areaTop/AreaTop";
 
 
 const Dashboard = () => {
   return (
     <div className="content-area">
-      Dashboard
+      <AreaTop/>
     </div>
   );
 };
