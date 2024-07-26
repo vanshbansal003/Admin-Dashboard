@@ -1,16 +1,18 @@
 import { MdOutlineMenu } from "react-icons/md";
 import "./AreaTop.scss"
-import { useContext, useEffect } from "react";
+import {useRef,useState, useContext, useEffect } from "react";
 import { SidebarContext } from "../../../Context/SidebarContext";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { addDays } from "date-fns";
 import { DateRange } from "react-date-range";
+
+
 const AreaTop =  () => {
 
     const {openSidebar} = useContext(SidebarContext);
     
-    const [state , useState] = useState ([
+    const [state , setState] = useState ([
         {
             startDate : new Date(),
             endDate : addDays(new Date(),7),
@@ -52,7 +54,7 @@ return (
  {/* Date Picker  */}
     <div className="area-top-r">
         <div ref={dataRangeRef} 
-            className= {`data-range-wrpper ${!showDatePicker ? "hide-data-range" :""}`}
+            className= {`date-range-wrapper ${!showDatePicker ? "hide-date-range" :""}`}
             onClick = {handleInputClick}>
             <DateRange
              editableDateInputs={true}
